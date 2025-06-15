@@ -51,7 +51,7 @@
       <a-assets></a-assets>
 
       <!-- Main 360 display -->
-      <a-videosphere id="sphere" src="#video360" rotation="0 -90 0"></a-videosphere>
+      <a-videosphere id="sphere" src="#video360" rotation="0 90 0"></a-videosphere>
 
       <!-- Camera + cursor -->
       <a-entity camera look-controls position="0 1.6 0">
@@ -92,16 +92,16 @@
       // Scene map: connections + hotspot positions
       const scenes = {
         "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4": [
-          { target: "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video2.mp4", position: "5 1 -2", color: "green" },
-          { target: "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video3.mp4", position: "1 1 5", color: "blue" }
+          { target: "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video2.mp4", position: "-4 1 -4", color: "green" },
+          { target: "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video3.mp4", position: "3 1 -1", color: "blue" }
         ],
         "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video2.mp4": [
-          { target: "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4", position: "2 1 -4", color: "red" },
-          { target: "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video3.mp4", position: "-1 1 -4", color: "blue" }
+          { target: "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4", position: "0.5 1 -4", color: "red" },
+          { target: "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video3.mp4", position: "-2 1 -4", color: "blue" }
         ],
         "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video3.mp4": [
-          { target: "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4", position: "4 1 -1", color: "red" },
-          { target: "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video2.mp4", position: "5 1 6", color: "green" }
+          { target: "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4", position: "-5 1 -1.5", color: "red" },
+          { target: "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video2.mp4", position: "-2 1 -6", color: "green" }
         ]
       };
 
