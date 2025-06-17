@@ -27,9 +27,19 @@
         display: block;
         margin-bottom: 8px;
       }
+	  #fade {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: black;
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        pointer-events: none;
+      }
     </style>
   </head>
   <body>
+	<div id="fade"></div>
     <!-- Video element (shared) -->
     <video id="video360"
            crossorigin="anonymous"
@@ -60,6 +70,9 @@
                   geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02"
                   material="color: white; shader: flat"></a-entity>
       </a-entity>
+	  
+	  <!-- Empty videosphere to be populated after video.play() -->
+      <a-videosphere id="sphere" rotation="0 0 0" visible="false"></a-videosphere>
 
       <!-- Hotspot placeholders -->
       <a-entity id="toScene2"
@@ -121,15 +134,33 @@
           alert("Video playback failed to start: " + e.message);
         }
       });
+	  
+	  function fadeInOut(callback) {
+        fadeOverlay.style.opacity = '1';
+        setTimeout(() => {
+          callback();
+          fadeOverlay.style.opacity = '0';
+        }, 500);
+      }
 
       function setScene(sceneName) {
-        currentScene = sceneName;
-        fadeTransition(() => {
+        fadeInOut(() => {
           videoEl.pause();
           videoEl.src = sceneName;
           videoEl.load();
-          videoEl.play();
-          updateHotspots(sceneName);
+
+          videoEl.onloadeddata = () => {
+            videoEl.play().then(() => {
+              // Assign video as texture only after successful play()
+              sphere.setAttribute('src', '#video360');
+              sphere.setAttribute('rotation', `0 ${sceneRotations[sceneName] || 0} 0`);
+              sphere.setAttribute('visible', 'true');
+
+              updateHotspots(sceneName);
+            }).catch(err => {
+              console.error('Video play failed:', err);
+            });
+          };
         });
       }
 
