@@ -27,19 +27,9 @@
         display: block;
         margin-bottom: 8px;
       }
-	  #fade {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: black;
-        z-index: 1;
-        opacity: 0;
-        transition: opacity 0.5s ease-in-out;
-        pointer-events: none;
-      }
     </style>
   </head>
   <body>
-	<div id="fade"></div>
     <!-- Video element (shared) -->
     <video id="video360"
            crossorigin="anonymous"
@@ -70,9 +60,6 @@
                   geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02"
                   material="color: white; shader: flat"></a-entity>
       </a-entity>
-	  
-	  <!-- Empty videosphere to be populated after video.play() -->
-      <a-videosphere id="sphere" rotation="0 0 0" visible="false"></a-videosphere>
 
       <!-- Hotspot placeholders -->
       <a-entity id="toScene2"
@@ -96,7 +83,6 @@
       const minimap = document.getElementById("minimap");
       const videoEl = document.getElementById("video360");
       const sphere = document.getElementById("sphere");
-	  const fadeOverlay = document.getElementById('fade');
 
       const toScene2 = document.getElementById("toScene2");
       const toScene3 = document.getElementById("toScene3");
@@ -104,7 +90,7 @@
       let currentScene = "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4";
 
       // Scene map: connections + hotspot positions
-      const hotspots = {
+      const scenes = {
         "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4": [
           { target: "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video2.mp4", position: "-4 1 -4", color: "green" },
           { target: "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video3.mp4", position: "3 1 -1", color: "blue" }
@@ -135,62 +121,38 @@
           alert("Video playback failed to start: " + e.message);
         }
       });
-	  
-	  function fadeInOut(callback) {
-        fadeOverlay.style.opacity = '1';
-        setTimeout(() => {
-          callback();
-          fadeOverlay.style.opacity = '0';
-        }, 500);
-      }
 
       function setScene(sceneName) {
-        fadeInOut(() => {
+        currentScene = sceneName;
+        fadeTransition(() => {
           videoEl.pause();
           videoEl.src = sceneName;
           videoEl.load();
-
-          videoEl.onloadeddata = () => {
-            videoEl.play().then(() => {
-              // Assign video as texture only after successful play()
-              sphere.setAttribute('src', '#video360');
-              sphere.setAttribute('rotation', `0 ${sceneRotations[sceneName] || 0} 0`);
-              sphere.setAttribute('visible', 'true');
-
-              updateHotspots(sceneName);
-            }).catch(err => {
-              console.error('Video play failed:', err);
-            });
-          };
+          videoEl.play();
+          updateHotspots(sceneName);
         });
       }
 
-      function updateHotspots(sceneName) {
-	// Remove existing hotspot entities
-	while (hotspotContainer.firstChild) {
-		hotspotContainer.removeChild(hotspotContainer.firstChild);
-	}
+      function updateHotspots(scene) {
+        const hotspotDefs = scenes[scene];
+        const hotspotEls = [toScene2, toScene3];
 
-	const sceneHotspots = hotspots[sceneName] || [];
-	sceneHotspots.forEach(({ target, position }) => {
-		const hotspot = document.createElement('a-entity');
-		hotspot.setAttribute('geometry', {
-		primitive: 'sphere',
-		radius: 0.3
-		});
-		hotspot.setAttribute('material', {
-		color: '#00ffff',
-		opacity: 0.5,
-		transparent: true
-		});
-		hotspot.setAttribute('position', position);
-		hotspot.setAttribute('class', 'hotspot');
-		hotspot.setAttribute('cursor-listener', '');
-		hotspot.addEventListener('click', () => setScene(target));
-		hotspotContainer.appendChild(hotspot);
-	});
-}
+        hotspotEls.forEach((el, i) => {
+          const { target, position, color } = hotspotDefs[i];
+          el.setAttribute("position", position);
+          el.setAttribute("material", `color: ${color}; opacity: 0.5; transparent: true`);
+          el.setAttribute("visible", true);
 
+          // Remove previous handler
+          if (el.handler) {
+            el.removeEventListener("click", el.handler);
+          }
+
+          // Add new handler
+          el.handler = () => setScene(target);
+          el.addEventListener("click", el.handler);
+        });
+      }
 
       function fadeTransition(callback) {
         const overlay = document.createElement("div");
