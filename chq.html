@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -30,7 +31,6 @@
     </style>
   </head>
   <body>
-    <!-- Video element (shared) -->
     <video id="video360"
        crossorigin="anonymous"
        loop
@@ -40,24 +40,18 @@
        preload="auto"
        style="display: none;"></video>
 
-    <!-- Minimap UI -->
     <div id="minimap">
       <button onclick="setScene('https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4')">Scene 1</button>
       <button onclick="setScene('https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video2.mp4')">Scene 2</button>
       <button onclick="setScene('https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video3.mp4')">Scene 3</button>
     </div>
 
-    <!-- Start Button -->
     <button id="startButton">Enter Experience</button>
 
-    <!-- A-Frame Scene -->
     <a-scene vr-mode-ui="enabled: true">
       <a-assets></a-assets>
+      <a-entity id="videosphere-container"></a-entity>
 
-      <!-- Main 360 display -->
-      <a-videosphere id="sphere" src="#video360" rotation="0 90 0"></a-videosphere>
-
-      <!-- Camera + cursor -->
       <a-entity camera look-controls position="0 1.6 0">
         <a-entity cursor="fuse: true; fuseTimeout: 500"
                   position="0 0 -1"
@@ -65,7 +59,6 @@
                   material="color: white; shader: flat"></a-entity>
       </a-entity>
 
-      <!-- Hotspot placeholders -->
       <a-entity id="toScene2"
                 geometry="primitive: sphere; radius: 0.3"
                 material="color: green; opacity: 0.5; transparent: true"
@@ -81,19 +74,16 @@
                 class="clickable"></a-entity>
     </a-scene>
 
-    <!-- Logic -->
     <script>
       const startButton = document.getElementById("startButton");
       const minimap = document.getElementById("minimap");
       const videoEl = document.getElementById("video360");
-      const sphere = document.getElementById("sphere");
-
       const toScene2 = document.getElementById("toScene2");
       const toScene3 = document.getElementById("toScene3");
+      const sphereContainer = document.getElementById("videosphere-container");
 
       let currentScene = "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4";
 
-      // Scene map: connections + hotspot positions
       const scenes = {
         "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4": [
           { target: "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video2.mp4", position: "-4 1 -4", color: "green" },
@@ -110,41 +100,40 @@
       };
 
       startButton.addEventListener("click", () => {
-        try {
-          // Unlock video on iOS
-          videoEl.src = currentScene;
-          videoEl.load();
-          videoEl.play().then(() => {
-            videoEl.pause();
-            videoEl.play();
-            startButton.style.display = "none";
-            minimap.style.display = "block";
-            updateHotspots(currentScene);
-          });
-        } catch (e) {
-          alert("Video playback failed to start: " + e.message);
-        }
+        videoEl.src = currentScene;
+        videoEl.load();
+        videoEl.play().then(() => {
+          videoEl.pause();
+          videoEl.play();
+          startButton.style.display = "none";
+          minimap.style.display = "block";
+          setScene(currentScene);
+        });
       });
 
       function setScene(sceneName) {
-		currentScene = sceneName;
-		fadeTransition(() => {
-			videoEl.pause();
-			videoEl.src = sceneName;
-			videoEl.load();
+        currentScene = sceneName;
+        fadeTransition(() => {
+          videoEl.pause();
+          videoEl.src = sceneName;
+          videoEl.load();
 
-			videoEl.onloadeddata = () => {
-			videoEl.play().then(() => {
-				// Only assign the video as a texture after playback begins
-				sphere.setAttribute("src", "#video360");
-				updateHotspots(sceneName);
-			}).catch(err => {
-				console.error("Video playback failed:", err);
-			});
-			};
-		});
-		}
-	
+          videoEl.onloadeddata = () => {
+            videoEl.play().then(() => {
+              const oldSphere = document.getElementById("sphere");
+              if (oldSphere) sphereContainer.removeChild(oldSphere);
+
+              const newSphere = document.createElement("a-videosphere");
+              newSphere.setAttribute("id", "sphere");
+              newSphere.setAttribute("src", "#video360");
+              newSphere.setAttribute("rotation", "0 90 0");
+              sphereContainer.appendChild(newSphere);
+
+              updateHotspots(sceneName);
+            });
+          };
+        });
+      }
 
       function updateHotspots(scene) {
         const hotspotDefs = scenes[scene];
@@ -155,13 +144,7 @@
           el.setAttribute("position", position);
           el.setAttribute("material", `color: ${color}; opacity: 0.5; transparent: true`);
           el.setAttribute("visible", true);
-
-          // Remove previous handler
-          if (el.handler) {
-            el.removeEventListener("click", el.handler);
-          }
-
-          // Add new handler
+          if (el.handler) el.removeEventListener("click", el.handler);
           el.handler = () => setScene(target);
           el.addEventListener("click", el.handler);
         });
