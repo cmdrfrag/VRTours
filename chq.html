@@ -123,15 +123,24 @@
       });
 
       function setScene(sceneName) {
-        currentScene = sceneName;
-        fadeTransition(() => {
-          videoEl.pause();
-          videoEl.src = sceneName;
-          videoEl.load();
-          videoEl.play();
-          updateHotspots(sceneName);
-        });
-      }
+		currentScene = sceneName;
+		fadeTransition(() => {
+			videoEl.pause();
+			videoEl.src = sceneName;
+			videoEl.load();
+
+			videoEl.onloadeddata = () => {
+			videoEl.play().then(() => {
+				// Only assign the video as a texture after playback begins
+				sphere.setAttribute("src", "#video360");
+				updateHotspots(sceneName);
+			}).catch(err => {
+				console.error("Video playback failed:", err);
+			});
+			};
+		});
+		}
+	
 
       function updateHotspots(scene) {
         const hotspotDefs = scenes[scene];
