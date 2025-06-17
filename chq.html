@@ -165,26 +165,32 @@
         });
       }
 
-      function updateHotspots(scene) {
-        const hotspotDefs = scenes[scene];
-        const hotspotEls = [toScene2, toScene3];
+      function updateHotspots(sceneName) {
+	// Remove existing hotspot entities
+	while (hotspotContainer.firstChild) {
+		hotspotContainer.removeChild(hotspotContainer.firstChild);
+	}
 
-        hotspotEls.forEach((el, i) => {
-          const { target, position, color } = hotspotDefs[i];
-          el.setAttribute("position", position);
-          el.setAttribute("material", `color: ${color}; opacity: 0.5; transparent: true`);
-          el.setAttribute("visible", true);
+	const sceneHotspots = hotspots[sceneName] || [];
+	sceneHotspots.forEach(({ target, position }) => {
+		const hotspot = document.createElement('a-entity');
+		hotspot.setAttribute('geometry', {
+		primitive: 'sphere',
+		radius: 0.3
+		});
+		hotspot.setAttribute('material', {
+		color: '#00ffff',
+		opacity: 0.5,
+		transparent: true
+		});
+		hotspot.setAttribute('position', position);
+		hotspot.setAttribute('class', 'hotspot');
+		hotspot.setAttribute('cursor-listener', '');
+		hotspot.addEventListener('click', () => setScene(target));
+		hotspotContainer.appendChild(hotspot);
+	});
+}
 
-          // Remove previous handler
-          if (el.handler) {
-            el.removeEventListener("click", el.handler);
-          }
-
-          // Add new handler
-          el.handler = () => setScene(target);
-          el.addEventListener("click", el.handler);
-        });
-      }
 
       function fadeTransition(callback) {
         const overlay = document.createElement("div");
