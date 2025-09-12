@@ -113,25 +113,36 @@
       });
 
       function setScene(sceneName) {
-  currentScene = sceneName;
-  fadeTransition(() => {
-    videoEl.pause();
-    videoEl.src = sceneName;
-    videoEl.load();
+		currentScene = sceneName;
 
-    // Hide sphere until new video is ready
-    const sphere = document.getElementById("sphere");
-    if (sphere) sphere.setAttribute("visible", false);
+		fadeTransition(() => {
+			// Pause and swap video source
+			videoEl.pause();
+			videoEl.src = sceneName;
+			videoEl.load();
 
-    videoEl.onloadeddata = () => {
-      videoEl.play().then(() => {
-        sphere.setAttribute("src", "#video360");
-        sphere.setAttribute("visible", true); // Show again
-        updateHotspots(sceneName);
-      });
-    };
-  });
-}
+			// Hide the sphere while loading the new video
+			const sphere = document.getElementById("sphere");
+			if (sphere) {
+			sphere.setAttribute("visible", false);
+			}
+
+			// Once enough data is loaded
+			videoEl.onloadeddata = () => {
+			videoEl.play().then(() => {
+				// Assign the video texture
+				sphere.setAttribute("src", "#video360");
+				sphere.setAttribute("visible", true);
+
+				// Update hotspots for this scene
+				updateHotspots(sceneName);
+			}).catch(err => {
+				console.error("Video playback failed:", err);
+			});
+			};
+		});
+		}
+
 
       function updateHotspots(scene) {
         const hotspotDefs = scenes[scene];
