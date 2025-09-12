@@ -55,8 +55,7 @@
         <a-entity cursor="fuse: true; fuseTimeout: 2000"
                   position="0 0 -1"
                   geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02"
-                  material="color: white; shader: flat"
-				  animation__fusing="property: scale; startEvents: fusing; endEvents: mouseleave; dir: alternate; dur: 2000; from: 1 1 1; to: 0.1 0.1 0.1">
+                  material="color: white; shader: flat">
  				  </a-entity>
       </a-entity>
 
@@ -144,20 +143,46 @@
 		}
 
 
-      function updateHotspots(scene) {
-        const hotspotDefs = scenes[scene];
-        const hotspotEls = [toScene2, toScene3];
+		function updateHotspots(sceneName) {
+		  const hotspotDefs = scenes[sceneName];
+		  const hotspotEls = [toScene2, toScene3];
 
-        hotspotEls.forEach((el, i) => {
-          const { target, position, color } = hotspotDefs[i];
-          el.setAttribute("position", position);
-          el.setAttribute("material", `color: ${color}; opacity: 0.5; transparent: true`);
-          el.setAttribute("visible", true);
-          if (el.handler) el.removeEventListener("click", el.handler);
-          el.handler = () => setScene(target);
-          el.addEventListener("click", el.handler);
-        });
-      }
+		  hotspotEls.forEach((el, i) => {
+			const { target, position, color } = hotspotDefs[i];
+
+			// Update visuals
+			el.setAttribute("position", position);
+			el.setAttribute("material", `color: ${color}; opacity: 0.5; transparent: true`);
+			el.setAttribute("visible", true);
+			el.classList.add("hotspot");
+
+			// Clear old event listener
+			if (el.handler) el.removeEventListener("click", el.handler);
+
+			// Add click handler for scene transition
+			el.handler = () => setScene(target);
+			el.addEventListener("click", el.handler);
+
+			// Cursor fuse animation handlers
+			el.addEventListener("mouseenter", () => {
+			  const cursor = document.getElementById("cursor");
+			  cursor.setAttribute("animation__fusing", {
+				property: "scale",
+				from: "1 1 1",
+				to: "0.1 0.1 0.1",
+				dur: 2000,
+				easing: "linear"
+			  });
+			});
+
+    el.addEventListener("mouseleave", () => {
+      const cursor = document.getElementById("cursor");
+      cursor.removeAttribute("animation__fusing");
+      cursor.setAttribute("scale", "1 1 1"); // reset
+    });
+  });
+}
+
 
       function fadeTransition(callback) {
         const overlay = document.createElement("div");
@@ -181,6 +206,36 @@
           }, 1000);
         });
       }
+	  
+	    // Cursor element
+		const cursor = document.getElementById("cursor");
+
+		// Function to add fuse animation
+		function startFuseAnimation() {
+		  cursor.setAttribute("animation__fusing", {
+			property: "scale",
+			from: "1 1 1",
+			to: "0.1 0.1 0.1",
+			dur: 2000,
+			easing: "linear",
+			startEvents: "fusing",
+			pauseEvents: "mouseleave"
+		  });
+		}
+
+		// Attach events only to hotspots
+		document.addEventListener("DOMContentLoaded", () => {
+		  document.querySelectorAll(".hotspot").forEach(hotspot => {
+			hotspot.addEventListener("mouseenter", () => {
+			  startFuseAnimation();
+			});
+			hotspot.addEventListener("mouseleave", () => {
+			  cursor.removeAttribute("animation__fusing");
+			  cursor.setAttribute("scale", "1 1 1"); // reset size
+			});
+		  });
+		});
+
     </script>
   </body>
 </html>
