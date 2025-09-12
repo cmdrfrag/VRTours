@@ -111,36 +111,39 @@
         });
       });
 
-      function setScene(sceneName) {
-		currentScene = sceneName;
+		function setScene(sceneName) {
+		  currentScene = sceneName;
 
-		fadeTransition(() => {
-			// Pause and swap video source
+		  fadeTransition(() => {
 			videoEl.pause();
 			videoEl.src = sceneName;
 			videoEl.load();
 
-			// Hide the sphere while loading the new video
-			const sphere = document.getElementById("sphere");
-			if (sphere) {
-			sphere.setAttribute("visible", false);
-			}
+			// Hide old sphere if it exists
+			const oldSphere = document.getElementById("sphere");
+			if (oldSphere) oldSphere.setAttribute("visible", false);
 
-			// Once enough data is loaded
 			videoEl.onloadeddata = () => {
-			videoEl.play().then(() => {
-				// Assign the video texture
-				sphere.setAttribute("src", "#video360");
-				sphere.setAttribute("visible", true);
+			  videoEl.play().then(() => {
+				// Remove old sphere and create fresh one (avoids stale texture binding)
+				if (oldSphere) oldSphere.parentNode.removeChild(oldSphere);
 
-				// Update hotspots for this scene
+				const newSphere = document.createElement("a-videosphere");
+				newSphere.setAttribute("id", "sphere");
+				newSphere.setAttribute("src", "#video360");
+				newSphere.setAttribute("rotation", "0 90 0");
+				newSphere.setAttribute("material", "shader: flat; npot: true; magFilter: linear; minFilter: linear;");
+				sphereContainer.appendChild(newSphere);
+
+				// ✅ Now update hotspots once we know video texture is bound
 				updateHotspots(sceneName);
-			}).catch(err => {
+			  }).catch(err => {
 				console.error("Video playback failed:", err);
-			});
+			  });
 			};
-		});
+		  });
 		}
+
 
 
 		function updateHotspots(sceneName) {
@@ -150,20 +153,20 @@
 		  hotspotEls.forEach((el, i) => {
 			const { target, position, color } = hotspotDefs[i];
 
-			// Update visuals
+			// Set visuals
 			el.setAttribute("position", position);
 			el.setAttribute("material", `color: ${color}; opacity: 0.5; transparent: true`);
 			el.setAttribute("visible", true);
 			el.classList.add("hotspot");
 
-			// Clear old event listener
+			// Remove previous click handler
 			if (el.handler) el.removeEventListener("click", el.handler);
 
-			// Add click handler for scene transition
+			// Add new click handler
 			el.handler = () => setScene(target);
 			el.addEventListener("click", el.handler);
 
-			// Cursor fuse animation handlers
+			// Cursor fuse animation only when gazing at hotspots
 			el.addEventListener("mouseenter", () => {
 			  const cursor = document.getElementById("cursor");
 			  cursor.setAttribute("animation__fusing", {
@@ -175,13 +178,14 @@
 			  });
 			});
 
-    el.addEventListener("mouseleave", () => {
-      const cursor = document.getElementById("cursor");
-      cursor.removeAttribute("animation__fusing");
-      cursor.setAttribute("scale", "1 1 1"); // reset
-    });
-  });
-}
+			el.addEventListener("mouseleave", () => {
+			  const cursor = document.getElementById("cursor");
+			  cursor.removeAttribute("animation__fusing");
+			  cursor.setAttribute("scale", "1 1 1"); // reset
+			});
+		  });
+		}
+
 
 
       function fadeTransition(callback) {
