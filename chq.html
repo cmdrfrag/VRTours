@@ -113,28 +113,25 @@
       });
 
       function setScene(sceneName) {
-        currentScene = sceneName;
-        fadeTransition(() => {
-          videoEl.pause();
-          videoEl.src = sceneName;
-          videoEl.load();
+  currentScene = sceneName;
+  fadeTransition(() => {
+    videoEl.pause();
+    videoEl.src = sceneName;
+    videoEl.load();
 
-          videoEl.onloadeddata = () => {
-            videoEl.play().then(() => {
-              const oldSphere = document.getElementById("sphere");
-              if (oldSphere) sphereContainer.removeChild(oldSphere);
+    // Hide sphere until new video is ready
+    const sphere = document.getElementById("sphere");
+    if (sphere) sphere.setAttribute("visible", false);
 
-              const newSphere = document.createElement("a-videosphere");
-              newSphere.setAttribute("id", "sphere");
-              newSphere.setAttribute("src", "#video360");
-              newSphere.setAttribute("rotation", "0 90 0");
-              sphereContainer.appendChild(newSphere);
-
-              updateHotspots(sceneName);
-            });
-          };
-        });
-      }
+    videoEl.onloadeddata = () => {
+      videoEl.play().then(() => {
+        sphere.setAttribute("src", "#video360");
+        sphere.setAttribute("visible", true); // Show again
+        updateHotspots(sceneName);
+      });
+    };
+  });
+}
 
       function updateHotspots(scene) {
         const hotspotDefs = scenes[scene];
