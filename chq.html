@@ -41,7 +41,7 @@
          style="display:none;"></video>
 
   <!-- Minimap -->
-  <div id="minimap">
+	<div id="minimap">
       <button onclick="setScene('https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4')">Scene 1</button>
       <button onclick="setScene('https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video2.mp4')">Scene 2</button>
       <button onclick="setScene('https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video3.mp4')">Scene 3</button>
@@ -62,24 +62,24 @@
   <a-scene vr-mode-ui="enabled: true">
     <a-entity id="videosphere-container"></a-entity>
 
-    <!-- Camera + cursor -->
-		<a-entity camera look-controls position="0 1.6 0">
-		  <a-entity id="cursor" position="0 0 -1">
-			<!-- Outer ring (static) -->
-			<a-entity
-			  geometry="primitive: ring; radiusInner: 0.018; radiusOuter: 0.025"
-			  material="color: white; shader: flat">
-			</a-entity>
+    <!-- Camera + dual-ring fuse cursor -->
+    <a-entity camera look-controls position="0 1.6 0">
+      <a-entity id="cursor" position="0 0 -1"
+                cursor="fuse: true; fuseTimeout: 2000">
+        <!-- Outer ring (static) -->
+        <a-entity
+          geometry="primitive: ring; radiusInner: 0.018; radiusOuter: 0.025"
+          material="color: white; shader: flat">
+        </a-entity>
 
-			<!-- Inner ring (progress fill) -->
-			<a-entity id="cursor-progress"
-			  geometry="primitive: ring; radiusInner: 0.018; radiusOuter: 0.025"
-			  material="color: yellow; shader: flat; opacity: 0.7"
-			  scale="0 1 1">
-			</a-entity>
-		  </a-entity>
-		</a-entity>
-
+        <!-- Inner ring (progress fill) -->
+        <a-entity id="cursor-progress"
+          geometry="primitive: ring; radiusInner: 0.018; radiusOuter: 0.025"
+          material="color: yellow; shader: flat; opacity: 0.7"
+          scale="0 1 1">
+        </a-entity>
+      </a-entity>
+    </a-entity>
 
     <!-- Hotspots -->
     <a-entity id="toScene2"
@@ -190,24 +190,23 @@
         el.handler = () => setScene(target);
         el.addEventListener("click", el.handler);
 
-        // Cursor fuse animation only when looking at a hotspot
-		el.addEventListener("fusing", () => {
-		  const cursor = document.getElementById("cursor");
-		  cursor.setAttribute("animation__fusing", {
-			property: "scale",
-			from: "1 1 1",
-			to: "0.1 0.1 0.1",
-			dur: 2000,
-			easing: "linear"
-		  });
-		});
+        // Cursor fuse progress animation only on hotspot gaze
+        el.addEventListener("fusing", () => {
+          const progress = document.getElementById("cursor-progress");
+          progress.setAttribute("animation__fuse", {
+            property: "scale",
+            from: "0 1 1",
+            to: "1 1 1",
+            dur: 2000,
+            easing: "linear"
+          });
+        });
 
-		el.addEventListener("mouseleave", () => {
-		  const cursor = document.getElementById("cursor");
-		  cursor.removeAttribute("animation__fusing");
-		  cursor.setAttribute("scale", "1 1 1");
-		});
-
+        el.addEventListener("mouseleave", () => {
+          const progress = document.getElementById("cursor-progress");
+          progress.removeAttribute("animation__fuse");
+          progress.setAttribute("scale", "0 1 1"); // reset
+        });
       });
     }
   </script>
