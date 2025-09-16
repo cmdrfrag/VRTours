@@ -41,11 +41,11 @@
          style="display:none;"></video>
 
   <!-- Minimap -->
-	<div id="minimap">
+  <div id="minimap">
       <button onclick="setScene('https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4')">Scene 1</button>
       <button onclick="setScene('https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video2.mp4')">Scene 2</button>
       <button onclick="setScene('https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video3.mp4')">Scene 3</button>
-    </div>
+  </div>
 
   <!-- Start Button -->
   <button id="startButton">Enter Experience</button>
@@ -56,6 +56,15 @@
     background:black; z-index:3;
     opacity:0; transition:opacity 1s;
     pointer-events:none;">
+  </div>
+
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" style="
+    position:fixed; top:0; left:0; right:0; bottom:0;
+    display:flex; align-items:center; justify-content:center;
+    background:black; color:white; font-size:24px; font-family:sans-serif;
+    z-index:4; opacity:0; transition:opacity 0.3s; pointer-events:none;">
+    Loading…
   </div>
 
   <!-- A-Frame Scene -->
@@ -101,11 +110,12 @@
     const videoEl = document.getElementById("video360");
     const sphereContainer = document.getElementById("videosphere-container");
     const fadeOverlay = document.getElementById("fadeOverlay");
+    const loadingOverlay = document.getElementById("loadingOverlay");
 
     const toScene2 = document.getElementById("toScene2");
     const toScene3 = document.getElementById("toScene3");
 
-    let currentScene = "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4";
+      let currentScene = "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4";
 
       const scenes = {
         "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4": [
@@ -154,6 +164,9 @@
         const oldSphere = document.getElementById("sphere");
         if (oldSphere) oldSphere.setAttribute("visible", false);
 
+        // 🔹 Show loading overlay
+        loadingOverlay.style.opacity = "1";
+
         videoEl.onloadeddata = () => {
           videoEl.play().then(() => {
             // Recreate sphere to bind new texture
@@ -167,7 +180,13 @@
             sphereContainer.appendChild(newSphere);
 
             updateHotspots(sceneName);
-          }).catch(err => console.error("Playback failed:", err));
+
+            // 🔹 Hide loading overlay once ready
+            loadingOverlay.style.opacity = "0";
+          }).catch(err => {
+            console.error("Playback failed:", err);
+            loadingOverlay.style.opacity = "0"; // fallback hide
+          });
         };
       });
     }
