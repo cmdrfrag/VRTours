@@ -1,0 +1,18 @@
+[
+  {
+    "slug": "arcade",
+    "title": "C-HQ Arcade",
+    "description": "Explore the Command HQ arcade in 360 and move between connected points of interest.",
+    "href": "experiences/arcade/",
+    "thumbnail": "CHQArcade.png",
+    "published": true
+  },
+  {
+    "slug": "venue2",
+    "title": "Venue 2 Preview",
+    "description": "A second VR tour slot with its own scene configuration, ready for another location.",
+    "href": "experiences/venue2/",
+    "thumbnail": "experiences/venue2/thumbnail.svg",
+    "published": false
+  }
+]
