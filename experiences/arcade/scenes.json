@@ -1,0 +1,53 @@
+{
+  "initialScene": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4",
+  "scenes": [
+    {
+      "label": "Scene 1",
+      "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4",
+      "hotspots": [
+        {
+          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video2.mp4",
+          "position": "-4 1 -4",
+          "color": "green"
+        },
+        {
+          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video3.mp4",
+          "position": "3 1 -1",
+          "color": "blue"
+        }
+      ]
+    },
+    {
+      "label": "Scene 2",
+      "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video2.mp4",
+      "hotspots": [
+        {
+          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4",
+          "position": "0.5 1 -4",
+          "color": "red"
+        },
+        {
+          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video3.mp4",
+          "position": "-2 1 -4",
+          "color": "blue"
+        }
+      ]
+    },
+    {
+      "label": "Scene 3",
+      "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video3.mp4",
+      "hotspots": [
+        {
+          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4",
+          "position": "-5 1 -1.5",
+          "color": "red"
+        },
+        {
+          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video2.mp4",
+          "position": "-2 1 -6",
+          "color": "green"
+        }
+      ]
+    }
+  ]
+}
