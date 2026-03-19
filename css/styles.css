@@ -245,7 +245,7 @@ body {
   pointer-events: none;
 }
 
-.a-dialog-message,
+.a-dialog-text,
 .a-dialog-allow-button,
 .a-dialog-deny-button,
 .a-dialog-ok-button {
