@@ -244,3 +244,10 @@ body {
   transition: opacity 0.3s;
   pointer-events: none;
 }
+
+.a-dialog-message,
+.a-dialog-allow-button,
+.a-dialog-deny-button,
+.a-dialog-ok-button {
+  color: black;
+}
