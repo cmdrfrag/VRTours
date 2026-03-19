@@ -2,49 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>VR Arcade Tour</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: radial-gradient(circle, #000 0%, #111 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      color: white;
-    }
-
-    .logo-link {
-      cursor: pointer;
-      text-align: center;
-      transition: transform 0.3s ease, filter 0.3s ease;
-    }
-
-    .logo-link:hover {
-      transform: scale(1.05);
-      filter: drop-shadow(0 0 10px #00ffff);
-    }
-
-    img {
-      max-width: 90%;
-      height: auto;
-    }
-
-    h1 {
-      margin-top: 20px;
-      font-size: 1.2rem;
-      color: #ccc;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VR Experiences</title>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body>
+<body class="landing-page">
+  <main class="landing-shell">
+    <header class="landing-header">
+      <p class="eyebrow">VR Experiences</p>
+      <h1>Choose an immersive tour</h1>
+      <p class="landing-copy">Browse available 360 experiences and jump straight into the one you want to explore.</p>
+    </header>
 
-  <a href="chq.html" class="logo-link">
-    <img src="https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/CHQArcade.png" alt="Command HQ Arcade" />
-  </a>
-  <h1>Click the logo to enter the experience</h1>
+    <section id="experienceGrid" class="experience-grid" aria-live="polite"></section>
+  </main>
 
+  <script src="js/landing.js"></script>
 </body>
 </html>
