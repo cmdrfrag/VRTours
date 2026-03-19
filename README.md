@@ -23,6 +23,7 @@ A static multi-experience A-Frame site that can be deployed directly to GitHub P
    - `description`
    - `href` (for example `experiences/my-tour/`)
    - `thumbnail`
+   - optional `published: false` if you want to keep it hidden from visitors while working on it
 
 Because the player loads `data-scenes-config="scenes.json"`, each experience can keep its own relative scene config without changing the shared JavaScript.
 

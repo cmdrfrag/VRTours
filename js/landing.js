@@ -46,9 +46,13 @@
       return response.json();
     })
     .then(function (experiences) {
-      experiences.forEach(function (experience) {
-        gridEl.appendChild(renderCard(experience));
-      });
+      experiences
+        .filter(function (experience) {
+          return experience.published !== false;
+        })
+        .forEach(function (experience) {
+          gridEl.appendChild(renderCard(experience));
+        });
     })
     .catch(function (error) {
       console.error("Unable to load experiences:", error);
