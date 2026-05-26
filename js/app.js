@@ -85,6 +85,20 @@
     startIdleHintTimer();
   }
 
+  function getInitialYaw(sceneDefinitions, sceneName) {
+    var match = sceneDefinitions.find(function (s) { return s.video === sceneName; });
+    return (match && match.initialYaw) || 0;
+  }
+
+  function setCameraYaw(degrees) {
+    var lookControls = cameraEl.components && cameraEl.components['look-controls'];
+    if (lookControls && lookControls.yawObject) {
+      lookControls.yawObject.rotation.y = degrees * (Math.PI / 180);
+    } else {
+      cameraEl.setAttribute('rotation', { x: 0, y: degrees, z: 0 });
+    }
+  }
+
   function buildScenesMap(sceneDefinitions) {
     const scenes = {};
 
@@ -208,6 +222,7 @@
       loadingOverlay: loadingOverlay,
       updateHotspots: hotspotsManager.updateHotspots,
       handleSceneReady: function (sceneName) {
+        setCameraYaw(getInitialYaw(config.scenes, sceneName));
         preloadLikelyScene(config.scenes, sceneName);
         hideElement(hotspotTooltip);
         startIdleHintTimer();
