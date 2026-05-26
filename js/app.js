@@ -91,12 +91,17 @@
   }
 
   function setCameraYaw(degrees) {
-    var lookControls = cameraEl.components && cameraEl.components['look-controls'];
-    if (lookControls && lookControls.yawObject) {
-      lookControls.yawObject.rotation.y = degrees * (Math.PI / 180);
-    } else {
-      cameraEl.setAttribute('rotation', { x: 0, y: degrees, z: 0 });
+    var radians = degrees * (Math.PI / 180);
+    function applyYaw() {
+      var lookControls = cameraEl.components && cameraEl.components['look-controls'];
+      if (lookControls && lookControls.yawObject) {
+        lookControls.yawObject.rotation.y = radians;
+      } else {
+        cameraEl.setAttribute('rotation', { x: 0, y: degrees, z: 0 });
+      }
     }
+    applyYaw();
+    requestAnimationFrame(applyYaw);
   }
 
   function buildScenesMap(sceneDefinitions) {
