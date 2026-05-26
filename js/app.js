@@ -1,4 +1,17 @@
 (function () {
+  if (!window.AFRAME || AFRAME.components['vrtours-yaw-lock']) { return; }
+  var _yawState = window._vrToursYawState = { radians: 0, framesLeft: 0 };
+  AFRAME.registerComponent('vrtours-yaw-lock', {
+    tick: function () {
+      if (_yawState.framesLeft <= 0) { return; }
+      var lc = this.el.components['look-controls'];
+      if (lc && lc.yawObject) { lc.yawObject.rotation.y = _yawState.radians; }
+      _yawState.framesLeft--;
+    }
+  });
+}());
+
+(function () {
   const DEFAULT_SCENES_CONFIG_URL = "scenes.json";
   const ONBOARDING_STORAGE_KEY = "vrtours-onboarding-seen";
   const IDLE_TIMEOUT_MS = 5000;
@@ -17,6 +30,9 @@
   const idleHint = document.getElementById("idleHint");
   const hotspotTooltip = document.getElementById("hotspotTooltip");
   const cameraEl = document.getElementById("playerCamera");
+  if (window.AFRAME && AFRAME.components['vrtours-yaw-lock']) {
+    cameraEl.setAttribute('vrtours-yaw-lock', '');
+  }
   const hotspotEls = [
     document.getElementById("toScene2"),
     document.getElementById("toScene3")
@@ -92,17 +108,13 @@
 
   function setCameraYaw(degrees) {
     var radians = degrees * (Math.PI / 180);
-    function applyYaw() {
-      var lookControls = cameraEl.components && cameraEl.components['look-controls'];
-      if (lookControls && lookControls.yawObject) {
-        lookControls.yawObject.rotation.y = radians;
-      } else {
-        cameraEl.setAttribute('rotation', { x: 0, y: degrees, z: 0 });
-      }
-    }
-    applyYaw();
-    requestAnimationFrame(applyYaw);
-    setTimeout(applyYaw, 80);
+    // Immediate best-effort application
+    var lc = cameraEl.components && cameraEl.components['look-controls'];
+    if (lc && lc.yawObject) { lc.yawObject.rotation.y = radians; }
+    // Tick-based enforcement: re-applies on every A-Frame frame for ~20 frames
+    // to override any post-load reset that happens inside A-Frame's render loop
+    var state = window._vrToursYawState;
+    if (state) { state.radians = radians; state.framesLeft = 20; }
   }
 
   function buildScenesMap(sceneDefinitions) {
