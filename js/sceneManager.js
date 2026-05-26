@@ -98,8 +98,8 @@
             );
             sphereContainer.appendChild(newSphere);
 
-            updateHotspots(sceneName);
             handleSceneReady(sceneName);
+            updateHotspots(sceneName);
             setTimeout(function () {
               loadingOverlay.style.opacity = "0";
             }, 100);

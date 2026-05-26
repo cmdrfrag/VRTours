@@ -48,8 +48,20 @@
     function updateHotspots(sceneName) {
       const hotspotDefs = getHotspots(sceneName);
 
-      hotspotEls.forEach(function (el, i) {
-        const hotspotDef = hotspotDefs[i];
+    hotspotEls.forEach(function (el, i) {
+        const hotspotDef = hotspotDefs && hotspotDefs[i];
+
+        if (!hotspotDef) {
+          el.setAttribute("visible", false);
+          el.removeAttribute("animation__pulse");
+          el.removeAttribute("animation__glow");
+          if (el.handler) {
+            el.removeEventListener("click", el.handler);
+            el.handler = null;
+          }
+          return;
+        }
+
         const target = hotspotDef.target;
         const position = hotspotDef.position;
         const color = hotspotDef.color;
