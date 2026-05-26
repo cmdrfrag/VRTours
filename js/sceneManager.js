@@ -100,7 +100,9 @@
 
             updateHotspots(sceneName);
             handleSceneReady(sceneName);
-            loadingOverlay.style.opacity = "0";
+            setTimeout(function () {
+              loadingOverlay.style.opacity = "0";
+            }, 100);
           }).catch(function (err) {
             if (loadToken !== pendingLoadToken) {
               return;

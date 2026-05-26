@@ -102,6 +102,7 @@
     }
     applyYaw();
     requestAnimationFrame(applyYaw);
+    setTimeout(applyYaw, 80);
   }
 
   function buildScenesMap(sceneDefinitions) {
