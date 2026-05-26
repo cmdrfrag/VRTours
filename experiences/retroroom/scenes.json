@@ -46,6 +46,86 @@
           "color": "red"
         }
       ]
-    }
+    },
+	    {
+      "label": "Back row 1",
+      "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_4.mp4",
+      "initialYaw": 0,
+      "hotspots": [
+        {
+          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_5.mp4",
+          "position": "-4 1 -4",
+          "color": "green"
+        },
+        {
+          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_3.mp4",
+          "position": "-5 1 -1.5",
+          "color": "red"
+        }
+      ]
+    },
+	    {
+      "label": "Back Row 2",
+      "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_5.mp4",
+      "initialYaw": 0,
+      "hotspots": [
+        {
+          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_6.mp4",
+          "position": "-4 1 -4",
+          "color": "green"
+        },
+        {
+          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_4.mp4",
+          "position": "-5 1 -1.5",
+          "color": "red"
+        }
+      ]
+    },
+	    {
+      "label": "Back row 3",
+      "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_6.mp4",
+      "initialYaw": 0,
+      "hotspots": [
+        {
+          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_7.mp4",
+          "position": "-4 1 -4",
+          "color": "green"
+        },
+        {
+          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_5.mp4",
+          "position": "-5 1 -1.5",
+          "color": "red"
+        }
+      ]
+    },
+	    {
+      "label": "Guitar Hero/Retro Consoles",
+      "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_7.mp4",
+      "initialYaw": 0,
+      "hotspots": [
+        {
+          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_8.mp4",
+          "position": "-4 1 -4",
+          "color": "green"
+        },
+        {
+          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_6.mp4",
+          "position": "-5 1 -1.5",
+          "color": "red"
+        }
+      ]
+    },
+	    {
+      "label": "Rear Corner",
+      "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_8.mp4",
+      "initialYaw": 0,
+      "hotspots": [
+        {
+          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_7.mp4",
+          "position": "-4 1 -4",
+          "color": "green"
+        }
+      ]
+    },
   ]
 }
