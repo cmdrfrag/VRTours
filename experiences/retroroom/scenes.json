@@ -4,7 +4,7 @@
     {
       "label": "Exterior",
       "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_1.mp4",
-      "initialYaw": 180,
+      "initialYaw": 90,
       "hotspots": [
         {
           "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_2.mp4",
