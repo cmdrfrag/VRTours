@@ -21,7 +21,7 @@
       "hotspots": [
         {
           "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_3.mp4",
-          "position": "-4 1 0",
+          "position": "6 1 0",
           "color": "green"
         },
         {
@@ -38,7 +38,7 @@
       "hotspots": [
         {
           "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_4.mp4",
-          "position": "-4 1 -8",
+          "position": "-4 1 4",
           "color": "green"
         },
         {
@@ -72,7 +72,7 @@
       "hotspots": [
         {
           "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_6.mp4",
-          "position": "-6 1 6",
+          "position": "1 1 6",
           "color": "green"
         },
         {
@@ -89,7 +89,7 @@
       "hotspots": [
         {
           "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_7.mp4",
-          "position": "0 -1 6",
+          "position": "0 0 6",
           "color": "green"
         },
         {
@@ -106,7 +106,7 @@
       "hotspots": [
         {
           "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_8.mp4",
-          "position": "-4 1 2",
+          "position": "-6 1 0.5",
           "color": "green"
         },
         {
