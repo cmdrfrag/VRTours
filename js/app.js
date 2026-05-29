@@ -166,6 +166,18 @@
     });
   }
 
+  function backgroundPreloadScenes(sceneDefinitions, currentScene) {
+    sceneDefinitions.forEach(function (sceneDefinition, i) {
+      if (sceneDefinition.video === currentScene) { return; }
+      setTimeout(function () {
+        fetch(sceneDefinition.video, {
+          method: 'GET',
+          headers: { 'Range': 'bytes=0-2097151' }  // first 2 MB to prime browser cache
+        }).catch(function () {});
+      }, (i + 1) * 4000);  // stagger by 4 s each to avoid competing with playback
+    });
+  }
+
   function preloadLikelyScene(sceneDefinitions, sceneName) {
     const likelyNextScene = getLikelyNextScene(sceneDefinitions, sceneName);
 
@@ -263,6 +275,7 @@
         showOnboardingIfNeeded();
         startIdleHintTimer();
         sceneManager.setScene(sceneManager.getCurrentScene());
+        backgroundPreloadScenes(config.scenes, sceneManager.getCurrentScene());
       });
     });
   }
