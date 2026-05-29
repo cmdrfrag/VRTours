@@ -21,7 +21,7 @@
       "hotspots": [
         {
           "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_3.mp4",
-          "position": "2 1 2",
+          "position": "-4 1 0",
           "color": "green"
         },
         {
@@ -32,13 +32,13 @@
       ]
     },
     {
-      "label": "Front row",
+      "label": "Front Row",
       "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_3.mp4",
       "initialYaw": 180,
       "hotspots": [
         {
           "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_4.mp4",
-          "position": "-4 1 -4",
+          "position": "-4 1 -8",
           "color": "green"
         },
         {
@@ -49,18 +49,18 @@
       ]
     },
 	    {
-      "label": "Back row 1",
+      "label": "Back Row 1",
       "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_4.mp4",
       "initialYaw": 180,
       "hotspots": [
         {
           "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_5.mp4",
-          "position": "1 1 6",
+          "position": "-1 1 6",
           "color": "green"
         },
         {
           "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_3.mp4",
-          "position": "-3 1 0",
+          "position": "-4 1 0",
           "color": "red"
         }
       ]
@@ -72,7 +72,7 @@
       "hotspots": [
         {
           "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_6.mp4",
-          "position": "-2 1 6",
+          "position": "-6 1 6",
           "color": "green"
         },
         {
@@ -83,13 +83,13 @@
       ]
     },
 	    {
-      "label": "Back row 3",
+      "label": "Back Row 3",
       "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_6.mp4",
       "initialYaw": 180,
       "hotspots": [
         {
           "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_7.mp4",
-          "position": "0 1 6",
+          "position": "0 -1 6",
           "color": "green"
         },
         {
@@ -106,7 +106,7 @@
       "hotspots": [
         {
           "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_8.mp4",
-          "position": "4 1 -4",
+          "position": "-4 1 2",
           "color": "green"
         },
         {
@@ -123,7 +123,7 @@
       "hotspots": [
         {
           "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_7.mp4",
-          "position": "-4 1 0",
+          "position": "-6 1 0",
           "color": "green"
         }
       ]
