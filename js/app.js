@@ -282,17 +282,18 @@
       ]);
 
       bufferReady.then(function () {
-        // Mute before play to guarantee iOS allows it, then unmute
-        videoEl.muted = true;
-        return videoEl.play();
+        // Try with audio first (user gesture should still be valid)
+        return videoEl.play().catch(function () {
+          // iOS fallback: play muted if gesture expired
+          videoEl.muted = true;
+          return videoEl.play();
+        });
       }).then(function () {
-        videoEl.muted = false;
         experienceStarted = true;
         loadingOverlay.style.opacity = "0";
         minimap.style.display = "block";
         showOnboardingIfNeeded();
         startIdleHintTimer();
-        sceneManager.setScene(sceneManager.getCurrentScene());
         backgroundPreloadScenes(config.scenes, sceneManager.getCurrentScene());
       }).catch(function (err) {
         console.error("Playback failed:", err);

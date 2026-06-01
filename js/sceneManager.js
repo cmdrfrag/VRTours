@@ -21,8 +21,6 @@
     function clearVideoSource() {
       videoEl.onloadeddata = null;
       videoEl.pause();
-      videoEl.removeAttribute("src");
-      videoEl.load();
     }
 
     function disposeObject3DMaterial(material) {
@@ -81,10 +79,11 @@
             return;
           }
 
-          // Mute before play to guarantee iOS allows it, then unmute
-          videoEl.muted = true;
-          videoEl.play().then(function () {
-            videoEl.muted = false;
+          videoEl.play().catch(function () {
+            // iOS fallback: play muted if user gesture expired
+            videoEl.muted = true;
+            return videoEl.play();
+          }).then(function () {
             if (loadToken !== pendingLoadToken) {
               return;
             }
