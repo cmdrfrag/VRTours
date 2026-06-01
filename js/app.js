@@ -269,37 +269,58 @@
       startButton.style.display = "none";
       loadingOverlay.style.opacity = "1";
 
-      videoEl.src = sceneManager.getCurrentScene();
+      var currentSceneName = sceneManager.getCurrentScene();
+      videoEl.src = currentSceneName;
       videoEl.load();
 
-      var bufferReady = Promise.race([
-        new Promise(function (resolve) {
-          videoEl.addEventListener("canplaythrough", resolve, { once: true });
-        }),
-        new Promise(function (resolve) {
-          setTimeout(resolve, 3000);
-        })
-      ]);
+      // Call play immediately in user gesture context (critical for iOS audio)
+      videoEl.play().then(function () {
+        onInitialPlayReady(currentSceneName);
+      }).catch(function () {
+        // Not enough data yet — wait for loadeddata then retry
+        videoEl.addEventListener("loadeddata", function () {
+          videoEl.play().catch(function () {
+            // Final iOS fallback: play muted
+            videoEl.muted = true;
+            return videoEl.play();
+          }).then(function () {
+            onInitialPlayReady(currentSceneName);
+          }).catch(function (err) {
+            console.error("Playback failed:", err);
+            loadingOverlay.style.opacity = "0";
+            startButton.style.display = "";
+          });
+        }, { once: true });
+      });
 
-      bufferReady.then(function () {
-        // Try with audio first (user gesture should still be valid)
-        return videoEl.play().catch(function () {
-          // iOS fallback: play muted if gesture expired
-          videoEl.muted = true;
-          return videoEl.play();
-        });
-      }).then(function () {
+      function onInitialPlayReady(sceneName) {
         experienceStarted = true;
+
+        // Create initial videosphere
+        var oldSphere = document.getElementById("sphere");
+        if (oldSphere && oldSphere.parentNode) {
+          oldSphere.parentNode.removeChild(oldSphere);
+        }
+        var newSphere = document.createElement("a-videosphere");
+        newSphere.setAttribute("id", "sphere");
+        newSphere.setAttribute("src", "#video360");
+        newSphere.setAttribute("rotation", "0 90 0");
+        newSphere.setAttribute(
+          "material",
+          "shader: flat; npot: true; magFilter: linear; minFilter: linear;"
+        );
+        sphereContainer.appendChild(newSphere);
+
         loadingOverlay.style.opacity = "0";
         minimap.style.display = "block";
+
+        setCameraYaw(getInitialYaw(config.scenes, sceneName));
+        hotspotsManager.updateHotspots(sceneName);
+        preloadLikelyScene(config.scenes, sceneName);
         showOnboardingIfNeeded();
         startIdleHintTimer();
-        backgroundPreloadScenes(config.scenes, sceneManager.getCurrentScene());
-      }).catch(function (err) {
-        console.error("Playback failed:", err);
-        loadingOverlay.style.opacity = "0";
-        startButton.style.display = "";
-      });
+        backgroundPreloadScenes(config.scenes, sceneName);
+      }
     });
   }
 
