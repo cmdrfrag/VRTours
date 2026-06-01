@@ -189,6 +189,21 @@
     preloadLinkEl.href = likelyNextScene;
   }
 
+  const mobileNav = document.getElementById("mobileNav");
+  let mobileNavSelect = null;
+  let mobileNavPrev = null;
+  let mobileNavNext = null;
+  let currentSceneIndex = 0;
+
+  function updateMobileNav(sceneDefinitions, sceneName) {
+    var idx = sceneDefinitions.findIndex(function (s) { return s.video === sceneName; });
+    if (idx === -1) { return; }
+    currentSceneIndex = idx;
+    if (mobileNavSelect) { mobileNavSelect.value = idx; }
+    if (mobileNavPrev) { mobileNavPrev.disabled = idx === 0; }
+    if (mobileNavNext) { mobileNavNext.disabled = idx === sceneDefinitions.length - 1; }
+  }
+
   function renderMinimap(sceneDefinitions, setScene) {
     minimap.innerHTML = "";
 
@@ -203,6 +218,47 @@
       });
       minimap.appendChild(button);
     });
+
+    // Build mobile nav: prev + dropdown + next
+    mobileNav.innerHTML = "";
+
+    mobileNavPrev = document.createElement("button");
+    mobileNavPrev.type = "button";
+    mobileNavPrev.textContent = "\u25C0";
+    mobileNavPrev.disabled = true;
+    mobileNavPrev.addEventListener("click", function () {
+      if (currentSceneIndex > 0) {
+        markInteraction();
+        setScene(sceneDefinitions[currentSceneIndex - 1].video);
+      }
+    });
+
+    mobileNavSelect = document.createElement("select");
+    sceneDefinitions.forEach(function (s, i) {
+      var opt = document.createElement("option");
+      opt.value = i;
+      opt.textContent = s.label;
+      mobileNavSelect.appendChild(opt);
+    });
+    mobileNavSelect.addEventListener("change", function () {
+      markInteraction();
+      setScene(sceneDefinitions[parseInt(mobileNavSelect.value)].video);
+    });
+
+    mobileNavNext = document.createElement("button");
+    mobileNavNext.type = "button";
+    mobileNavNext.textContent = "\u25B6";
+    mobileNavNext.disabled = sceneDefinitions.length <= 1;
+    mobileNavNext.addEventListener("click", function () {
+      if (currentSceneIndex < sceneDefinitions.length - 1) {
+        markInteraction();
+        setScene(sceneDefinitions[currentSceneIndex + 1].video);
+      }
+    });
+
+    mobileNav.appendChild(mobileNavPrev);
+    mobileNav.appendChild(mobileNavSelect);
+    mobileNav.appendChild(mobileNavNext);
   }
 
   function initializeApp(config) {
@@ -254,6 +310,7 @@
       handleSceneReady: function (sceneName) {
         setCameraYaw(getInitialYaw(config.scenes, sceneName));
         preloadLikelyScene(config.scenes, sceneName);
+        updateMobileNav(config.scenes, sceneName);
         hideElement(hotspotTooltip);
         startIdleHintTimer();
       }
@@ -313,9 +370,11 @@
 
         loadingOverlay.style.opacity = "0";
         minimap.style.display = "block";
+        mobileNav.style.display = "flex";
 
         setCameraYaw(getInitialYaw(config.scenes, sceneName));
         hotspotsManager.updateHotspots(sceneName);
+        updateMobileNav(config.scenes, sceneName);
         preloadLikelyScene(config.scenes, sceneName);
         showOnboardingIfNeeded();
         startIdleHintTimer();
