@@ -116,8 +116,8 @@ body {
 }
 
 .experience-page .back-link {
-  top: 20px;
-  right: 20px;
+  top: calc(20px + env(safe-area-inset-top));
+  right: calc(20px + env(safe-area-inset-right));
   text-decoration: none;
   border-radius: 999px;
 }
@@ -129,14 +129,16 @@ body {
 }
 
 #minimap {
-  top: 20px;
-  left: 20px;
+  top: calc(20px + env(safe-area-inset-top));
+  left: calc(20px + env(safe-area-inset-left));
   display: none;
 }
 
 #minimap button {
   display: block;
   margin-bottom: 8px;
+  min-height: 44px;
+  min-width: 44px;
 }
 
 #onboardingOverlay,

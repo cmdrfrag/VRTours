@@ -81,7 +81,10 @@
             return;
           }
 
+          // Mute before play to guarantee iOS allows it, then unmute
+          videoEl.muted = true;
           videoEl.play().then(function () {
+            videoEl.muted = false;
             if (loadToken !== pendingLoadToken) {
               return;
             }

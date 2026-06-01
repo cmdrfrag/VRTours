@@ -282,8 +282,11 @@
       ]);
 
       bufferReady.then(function () {
+        // Mute before play to guarantee iOS allows it, then unmute
+        videoEl.muted = true;
         return videoEl.play();
       }).then(function () {
+        videoEl.muted = false;
         experienceStarted = true;
         loadingOverlay.style.opacity = "0";
         minimap.style.display = "block";
