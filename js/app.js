@@ -185,6 +185,9 @@
   }
 
   function preloadLikelyScene(sceneDefinitions, sceneName) {
+    // Skip preloading on mobile to avoid memory pressure crashes on iOS
+    if (isMobile) { return; }
+
     const likelyNextScene = getLikelyNextScene(sceneDefinitions, sceneName);
 
     if (!likelyNextScene) {
