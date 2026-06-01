@@ -166,7 +166,13 @@
     });
   }
 
+  var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
   function backgroundPreloadScenes(sceneDefinitions, currentScene) {
+    // On mobile, skip aggressive preloading to avoid memory crashes.
+    // The <link rel="preload"> for the next likely scene is sufficient.
+    if (isMobile) { return; }
+
     sceneDefinitions.forEach(function (sceneDefinition, i) {
       if (sceneDefinition.video === currentScene) { return; }
       setTimeout(function () {
