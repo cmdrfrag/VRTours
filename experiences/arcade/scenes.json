@@ -2,7 +2,7 @@
   "initialScene": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4",
   "scenes": [
     {
-      "label": "Scene 1",
+      "label": "Entrance",
       "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4",
       "hotspots": [
         {
@@ -18,7 +18,7 @@
       ]
     },
     {
-      "label": "Scene 2",
+      "label": "Pinball/Racer",
       "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video2.mp4",
       "hotspots": [
         {
@@ -34,7 +34,7 @@
       ]
     },
     {
-      "label": "Scene 3",
+      "label": "Sinden",
       "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video3.mp4",
       "hotspots": [
         {
