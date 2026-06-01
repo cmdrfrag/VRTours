@@ -266,16 +266,35 @@
     });
 
     startButton.addEventListener("click", function () {
+      startButton.style.display = "none";
+      loadingOverlay.style.opacity = "1";
+
       videoEl.src = sceneManager.getCurrentScene();
       videoEl.load();
-      videoEl.play().then(function () {
+
+      var bufferReady = Promise.race([
+        new Promise(function (resolve) {
+          videoEl.addEventListener("canplaythrough", resolve, { once: true });
+        }),
+        new Promise(function (resolve) {
+          setTimeout(resolve, 3000);
+        })
+      ]);
+
+      bufferReady.then(function () {
+        return videoEl.play();
+      }).then(function () {
         experienceStarted = true;
-        startButton.style.display = "none";
+        loadingOverlay.style.opacity = "0";
         minimap.style.display = "block";
         showOnboardingIfNeeded();
         startIdleHintTimer();
         sceneManager.setScene(sceneManager.getCurrentScene());
         backgroundPreloadScenes(config.scenes, sceneManager.getCurrentScene());
+      }).catch(function (err) {
+        console.error("Playback failed:", err);
+        loadingOverlay.style.opacity = "0";
+        startButton.style.display = "";
       });
     });
   }
