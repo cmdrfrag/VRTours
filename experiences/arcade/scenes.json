@@ -1,17 +1,17 @@
 {
-  "initialScene": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4",
+  "initialScene": "https://media.command-hq.co.uk/video1.mp4",
   "scenes": [
     {
       "label": "Entrance",
-      "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4",
+      "video": "https://media.command-hq.co.uk/video1.mp4",
       "hotspots": [
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video2.mp4",
+          "target": "https://media.command-hq.co.uk/video2.mp4",
           "position": "-4 1 -4",
           "color": "green"
         },
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video3.mp4",
+          "target": "https://media.command-hq.co.uk/video3.mp4",
           "position": "3 1 -1",
           "color": "blue"
         }
@@ -19,15 +19,15 @@
     },
     {
       "label": "Pinball/Racer",
-      "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video2.mp4",
+      "video": "https://media.command-hq.co.uk/video2.mp4",
       "hotspots": [
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4",
+          "target": "https://media.command-hq.co.uk/video1.mp4",
           "position": "0.5 1 -4",
           "color": "red"
         },
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video3.mp4",
+          "target": "https://media.command-hq.co.uk/video3.mp4",
           "position": "-2 1 -4",
           "color": "blue"
         }
@@ -35,15 +35,15 @@
     },
     {
       "label": "Sinden",
-      "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video3.mp4",
+      "video": "https://media.command-hq.co.uk/video3.mp4",
       "hotspots": [
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video1.mp4",
+          "target": "https://media.command-hq.co.uk/video1.mp4",
           "position": "-5 1 -1.5",
           "color": "red"
         },
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/video2.mp4",
+          "target": "https://media.command-hq.co.uk/video2.mp4",
           "position": "-2 1 -6",
           "color": "green"
         }

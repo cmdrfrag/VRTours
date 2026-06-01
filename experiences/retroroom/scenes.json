@@ -1,14 +1,14 @@
 {
-  "initialScene": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_1.mp4",
+  "initialScene": "https://media.command-hq.co.uk/Retro_Room_1.mp4",
   "initialYaw": 180,
   "scenes": [
     {
       "label": "Exterior",
-      "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_1.mp4",
+      "video": "https://media.command-hq.co.uk/Retro_Room_1.mp4",
       "initialYaw": 180,
       "hotspots": [
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_2.mp4",
+          "target": "https://media.command-hq.co.uk/Retro_Room_2.mp4",
           "position": "0 1 6",
           "color": "blue"
         }
@@ -16,16 +16,16 @@
     },
     {
       "label": "Entrance",
-      "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_2.mp4",
+      "video": "https://media.command-hq.co.uk/Retro_Room_2.mp4",
       "initialYaw": 180,
       "hotspots": [
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_3.mp4",
+          "target": "https://media.command-hq.co.uk/Retro_Room_3.mp4",
           "position": "6 1 1",
           "color": "green"
         },
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_1.mp4",
+          "target": "https://media.command-hq.co.uk/Retro_Room_1.mp4",
           "position": "0 1 -6",
           "color": "red"
         }
@@ -33,16 +33,16 @@
     },
     {
       "label": "Front Row",
-      "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_3.mp4",
+      "video": "https://media.command-hq.co.uk/Retro_Room_3.mp4",
       "initialYaw": 180,
       "hotspots": [
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_4.mp4",
+          "target": "https://media.command-hq.co.uk/Retro_Room_4.mp4",
           "position": "-5 1 3",
           "color": "green"
         },
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_2.mp4",
+          "target": "https://media.command-hq.co.uk/Retro_Room_2.mp4",
           "position": "0 1 -6",
           "color": "red"
         }
@@ -50,16 +50,16 @@
     },
 	    {
       "label": "Back Row 1",
-      "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_4.mp4",
+      "video": "https://media.command-hq.co.uk/Retro_Room_4.mp4",
       "initialYaw": 180,
       "hotspots": [
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_5.mp4",
+          "target": "https://media.command-hq.co.uk/Retro_Room_5.mp4",
           "position": "-1 1 6",
           "color": "green"
         },
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_3.mp4",
+          "target": "https://media.command-hq.co.uk/Retro_Room_3.mp4",
           "position": "-4 1 0",
           "color": "red"
         }
@@ -67,16 +67,16 @@
     },
 	    {
       "label": "Back Row 2",
-      "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_5.mp4",
+      "video": "https://media.command-hq.co.uk/Retro_Room_5.mp4",
       "initialYaw": 180,
       "hotspots": [
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_6.mp4",
+          "target": "https://media.command-hq.co.uk/Retro_Room_6.mp4",
           "position": "2 1 6",
           "color": "green"
         },
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_4.mp4",
+          "target": "https://media.command-hq.co.uk/Retro_Room_4.mp4",
           "position": "-2 1 -6",
           "color": "red"
         }
@@ -84,16 +84,16 @@
     },
 	    {
       "label": "Back Row 3",
-      "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_6.mp4",
+      "video": "https://media.command-hq.co.uk/Retro_Room_6.mp4",
       "initialYaw": 180,
       "hotspots": [
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_7.mp4",
+          "target": "https://media.command-hq.co.uk/Retro_Room_7.mp4",
           "position": "0 2 6",
           "color": "green"
         },
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_5.mp4",
+          "target": "https://media.command-hq.co.uk/Retro_Room_5.mp4",
           "position": "0 1 -6",
           "color": "red"
         }
@@ -101,16 +101,16 @@
     },
 	    {
       "label": "Guitar Hero/Retro Consoles",
-      "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_7.mp4",
+      "video": "https://media.command-hq.co.uk/Retro_Room_7.mp4",
       "initialYaw": 180,
       "hotspots": [
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_8.mp4",
+          "target": "https://media.command-hq.co.uk/Retro_Room_8.mp4",
           "position": "-6 1 0.5",
           "color": "green"
         },
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_6.mp4",
+          "target": "https://media.command-hq.co.uk/Retro_Room_6.mp4",
           "position": "0 1 -6",
           "color": "red"
         }
@@ -118,11 +118,11 @@
     },
 	    {
       "label": "Rear Corner",
-      "video": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_8.mp4",
+      "video": "https://media.command-hq.co.uk/Retro_Room_8.mp4",
       "initialYaw": 180,
       "hotspots": [
         {
-          "target": "https://pub-01ff401aa37f4e2e9507a82aaa0d3e35.r2.dev/Retro_Room_7.mp4",
+          "target": "https://media.command-hq.co.uk/Retro_Room_7.mp4",
           "position": "-6 1 0",
           "color": "green"
         }
