@@ -264,7 +264,7 @@ body {
 }
 
 #idleHint {
-  bottom: 28px;
+  bottom: calc(72px + env(safe-area-inset-bottom));
 }
 
 #hotspotTooltip {

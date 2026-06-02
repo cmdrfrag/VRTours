@@ -41,6 +41,7 @@
 
   let idleHintTimer = 0;
   let experienceStarted = false;
+  let idleHintDismissed = false;
 
   preloadLinkEl.rel = "preload";
   preloadLinkEl.as = "video";
@@ -81,7 +82,7 @@
   }
 
   function startIdleHintTimer() {
-    if (!experienceStarted) {
+    if (!experienceStarted || idleHintDismissed) {
       return;
     }
 
@@ -97,8 +98,11 @@
       return;
     }
 
+    if (idleHint.classList.contains("visible")) {
+      idleHintDismissed = true;
+      clearIdleHintTimer();
+    }
     hideElement(idleHint);
-    startIdleHintTimer();
   }
 
   function getInitialYaw(sceneDefinitions, sceneName) {
