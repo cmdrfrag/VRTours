@@ -168,6 +168,39 @@
 
   var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
+  function applyMobileVideos(config) {
+    if (!isMobile) { return config; }
+
+    // Build desktop → mobile URL mapping from mobileVideo fields
+    var videoMap = {};
+    config.scenes.forEach(function (scene) {
+      if (scene.mobileVideo) {
+        videoMap[scene.video] = scene.mobileVideo;
+      }
+    });
+
+    // Swap initialScene
+    if (videoMap[config.initialScene]) {
+      config.initialScene = videoMap[config.initialScene];
+    }
+
+    // Swap scene videos and hotspot targets
+    config.scenes.forEach(function (scene) {
+      if (videoMap[scene.video]) {
+        scene.video = videoMap[scene.video];
+      }
+      if (scene.hotspots) {
+        scene.hotspots.forEach(function (hotspot) {
+          if (videoMap[hotspot.target]) {
+            hotspot.target = videoMap[hotspot.target];
+          }
+        });
+      }
+    });
+
+    return config;
+  }
+
   function backgroundPreloadScenes(sceneDefinitions, currentScene) {
     // On mobile, skip aggressive preloading to avoid memory crashes.
     // The <link rel="preload"> for the next likely scene is sufficient.
@@ -401,7 +434,7 @@
       return response.json();
     })
     .then(function (config) {
-      initializeApp(config);
+      initializeApp(applyMobileVideos(config));
     })
     .catch(function (error) {
       console.error("Unable to initialize tour:", error);
